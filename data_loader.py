@@ -1,8 +1,9 @@
 import csv
 import numpy as np
 import pandas as pd
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, SubsetRandomSampler
 import torch
+import random
 
 
 class SimpleDataset(Dataset):
@@ -24,13 +25,11 @@ class SimpleDataset(Dataset):
     def __getitem__(self, index):
         """ 
         Returns one sample from the dataset, for a given index. 
-        type index: int
-        rtype: torch
         """
         sample = self.data[index]
-        x = torch.from_numpy(np.array(sample[:-1]))
-        y = torch.from_numpy(np.array(sample[-1]))
-        return x, y
+        # x = torch.from_numpy(np.array(sample[:-1]))
+        # y = torch.from_numpy(np.array(sample[-1]))
+        return self.features[index], self.labels[index]
 
 
 def get_data_loader(path_to_csv, train_test_split, transform_fn=None, batch_size=32):
@@ -39,5 +38,18 @@ def get_data_loader(path_to_csv, train_test_split, transform_fn=None, batch_size
     dataset = SimpleDataset(path_to_csv, transform=transform_fn)
     dataset_size = len(dataset)
     indices = list(range(dataset_size))
+    random.shuffle(indices)
 
-    DataLoader
+    train_indices = indices[:int(dataset_size*train_test_split[0])]
+    test_indices = indices[int(
+        dataset_size*(train_test_split[0]+train_test_split[1])):]
+
+    train_sampler = SubsetRandomSampler(train_indices)
+    train_loader = DataLoader(
+        dataset, batch_size=batch_size, sampler=train_sampler)
+
+    test_sampler = SubsetRandomSampler(test_indices)
+    test_loader = DataLoader(
+        dataset, batch_size=batch_size, sampler=test_sampler)
+
+    return train_loader, test_loader

@@ -7,15 +7,16 @@ import data_loader as dl
 import plotting as plot
 
 
-class NeutralNetwork(nn.Module):
+class Model(nn.Module):
 
     def __init__(self, num_parem):
-        super().__init__()
+        super(MLP, self).__init__()
         self.hidden1 = Linear()
 
     def forward(self, x):
 
-    def windowing():
+    def data_transform(sample):
+        return sample
 
     def percent_error(output, target):
 

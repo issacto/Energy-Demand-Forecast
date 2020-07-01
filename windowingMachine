@@ -11,7 +11,7 @@ def convert(first,second, third):
         with open('window.csv','a+',  newline='') as write_obj:
             for row in csv_reader:
                 #change parameter here if larger than three for window
-                if((line_count-3)>0):
+                if((line_count-3)>0 ):
                     csv_writer = writer(write_obj)
                     csv_writer.writerow([df.iloc[line_count-first][0],df.iloc[line_count-second][0],df.iloc[line_count-third][0],df.iloc[line_count][0]] )
                 line_count+=1

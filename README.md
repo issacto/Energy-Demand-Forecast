@@ -1,4 +1,5 @@
 # Energy-Demand-Forecast
-Financial Prediction
+Data provided by Kaggle
+Package: Pytorch
 <br>
 Members: Winnie Chow, Issac To

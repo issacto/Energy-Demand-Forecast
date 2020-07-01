@@ -10,9 +10,10 @@ class SimpleDataset(Dataset):
 
     def __init__(self, path_to_csv, transform=None):
         df = pd.read_csv(path_to_csv)
-        raw_data = df.to_numpy()
-        transformed_data = transform(raw_data)
-        self.data = transformed_data
+        data = df.to_numpy()
+        if transform is not None:
+            data = transform(data)
+        self.data = data
         self.num_features = self.data.shape[1]-1
         self.features = self.data[:, :-1]
         self.labels = self.data[:, -1]
@@ -32,7 +33,7 @@ class SimpleDataset(Dataset):
         return self.features[index], self.labels[index]
 
 
-def get_data_loader(path_to_csv, train_test_split, transform_fn=None, batch_size=32):
+def get_data_loaders(path_to_csv, train_test_split, transform_fn=None, batch_size=32):
     """
     """
     dataset = SimpleDataset(path_to_csv, transform=transform_fn)

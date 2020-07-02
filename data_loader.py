@@ -24,8 +24,8 @@ class SimpleDataset(Dataset):
         return self.data.shape[0]
 
     def __getitem__(self, index):
-        """ 
-        Returns one sample from the dataset, for a given index. 
+        """
+        Returns one sample from the dataset, for a given index.
         """
         sample = self.data[index]
         # x = torch.from_numpy(np.array(sample[:-1]))
@@ -41,9 +41,9 @@ def get_data_loaders(path_to_csv, train_test_split, transform_fn=None, batch_siz
     indices = list(range(dataset_size))
     random.shuffle(indices)
 
-    train_indices = indices[:int(dataset_size*train_test_split[0])]
-    test_indices = indices[int(
-        dataset_size*(train_test_split[0]+train_test_split[1])):]
+    split = int(dataset_size*train_test_split[0])
+    train_indices = indices[:split]
+    test_indices = indices[split:]
 
     train_sampler = SubsetRandomSampler(train_indices)
     train_loader = DataLoader(

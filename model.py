@@ -18,7 +18,11 @@ class Model(nn.Module):
 
 
 def data_transform(sample):
-    return np.append([1], sample)
+    # mean = torch.mean(sample)
+    # std = torch.std(sample)
+    # return Normalize(mean, std)
+    norm = np.linalg.norm(sample)
+    return sample/norm
 
 
 def percent_error(output, target):
@@ -30,10 +34,10 @@ if __name__ == '__main__':
 
     # Configure these
     path_to_csv = 'window.csv'
-    transform_fn = None
+    transform_fn = data_transform
     train_test_split = [0.7, 0.3]
     batch_size = 32
-    lr = 0.01
+    lr = 0.001
     loss_fn = nn.MSELoss()
     num_param = 3  # can be obtained from loaders
     TOTAL_TIME_STEPS = 100
@@ -46,20 +50,20 @@ if __name__ == '__main__':
             batch_size=batch_size)
 
     model = Model(num_param)
-    optimizer = optim.SGD(model.parameters(), lr=lr)
+    optimizer = optim.Adam(model.parameters(), lr=lr)
 
     model.train()
     for t in range(TOTAL_TIME_STEPS):
         for batch_index, (input_t, y) in enumerate(train_loader):
 
             optimizer.zero_grad()
-            print(model.thetas)
+            # print(model.thetas)
             preds = model(input_t)
-            print('HELLLLOOOOOO')
-            print(preds)
-            print(y)
+            # print('HELLLLOOOOOO')
+            # print(preds)
+            # print(y)
             # You might have to change the shape of things here.
-            loss = loss_fn(preds, y)
+            loss = loss_fn(preds, y.view(1, len(y)))
             loss.backward()
             # print(loss)
             optimizer.step()
@@ -70,15 +74,12 @@ if __name__ == '__main__':
 
         preds = model(input_t)
 
-        print(preds)
+        # print("predicting")
+        # print(preds)
         loss = loss_fn(preds, y.view(1, len(y)))
+        # print(loss)
 
         """Uncomment below for the percent error across the eval set"""
 
-        #percentError = percent_error(preds, y.view(1, len(y)))
-        # print(percentError)
-
-        """Function plot_linear is used for Dataset 1 because it has two features.
-        Use function plot_linear_2D for Dataset 2."""
-
-        # plot.plot_linear(preds, input_t, y.view(1, len(y)))
+        percentError = percent_error(preds, y.view(1, len(y)))
+        print(percentError)

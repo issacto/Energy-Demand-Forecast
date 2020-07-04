@@ -6,10 +6,11 @@ import pandas as pd
 import dataset
 import matplotlib.pyplot as plt
 
+#expected loss < 1%
 
 class LSTM(nn.Module):
 
-    def __init__(self, input_size=1, hidden_layer_size=100, output_size=1):
+    def __init__(self, input_size=1, hidden_layer_size=5, output_size=1):
         super().__init__()
         self.hidden_layer_size = hidden_layer_size
 

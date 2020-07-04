@@ -83,3 +83,4 @@ if __name__ == '__main__':
 
         percentError = percent_error(preds, y.view(1, len(y)))
         print(percentError)
+

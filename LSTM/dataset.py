@@ -32,8 +32,9 @@ def normalize(data):
     return torch.FloatTensor(data_normalized)
 
 
-def inverse_transform(data):
+def inverse_transform(data, original):
     scaler = MinMaxScaler(feature_range=(-1, 1))
+    scalerobj = scaler.fit(original)
     return scaler.inverse_transform(np.array(data.reshape(-1, 1)))
 
 

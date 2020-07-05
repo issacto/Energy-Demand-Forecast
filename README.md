@@ -1,6 +1,8 @@
 # Energy-Demand-Forecast
 Data provided by Kaggle
 <br>
+Language: Python
+<br>
 Package: Keras, Matlab
 <br>
 Members: Winnie Chow, Issac To

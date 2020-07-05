@@ -23,8 +23,7 @@ model.add(Dense(1, activation='linear'))
 ```
 
 ## Output
-
-<img src="https://github.com/issacto/Energy-Demand-Forecast/blob/master/Image/plottedgraph.png" width="500">
 <img src="https://github.com/issacto/Energy-Demand-Forecast/blob/master/Image/trainingvstestloss.png" width="500">
+<img src="https://github.com/issacto/Energy-Demand-Forecast/blob/master/Image/plottedgraph.png" width="500">
 
 The model is quite accurate in that the loss is as 0.0007208.

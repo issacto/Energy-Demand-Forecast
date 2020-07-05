@@ -21,7 +21,11 @@ model.add(Dense(8, activation='relu'))
 model.add(Dropout(0.01))
 model.add(Dense(1, activation='linear'))
 ```
-
+We use Adam as optimizer and the early stopping's patience is set to be 3.
+```python
+es = EarlyStopping(monitor='val_loss',patience=3)
+history = model.fit(X_train, y_train, epochs=20,validation_data=(X_test, y_test), batch_size=32,callbacks=[es])
+```
 ## Output
 <img src="https://github.com/issacto/Energy-Demand-Forecast/blob/master/Image/trainingvstestloss.png" width="500">
 <img src="https://github.com/issacto/Energy-Demand-Forecast/blob/master/Image/plottedgraph.png" width="500">

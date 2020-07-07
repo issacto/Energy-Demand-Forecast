@@ -8,10 +8,12 @@ from sklearn.model_selection import KFold
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
+from keras.layers import GaussianNoise
 from keras.layers import Dense
 from keras import optimizers
 from keras.wrappers.scikit_learn import KerasRegressor
 from keras.callbacks import EarlyStopping
+from keras.layers import LSTM
 
 
 #Variables
@@ -28,14 +30,18 @@ xscale=scaler_x.transform(x)
 print(scaler_y.fit(y))
 yscale=scaler_y.transform(y)
 
+
 #split the data into train and test
 X_train, X_test, y_train, y_test = train_test_split(xscale, yscale, test_size = 0.2, random_state = 0)
+n_features = 1
+X_train=X_train.reshape(X_train.shape[0],X_train.shape[1],1)
+X_test=X_test.reshape(X_test.shape[0],X_test.shape[1],1)
 
 #Build model
-#missing decay rate
 model = Sequential()
-model.add(Dense(10, input_dim=10, activation='relu'))
-model.add(Dense(8, activation='relu'))
+model.add(LSTM(10,  activation='tanh', input_shape=(10, 1),return_sequences=True))
+#model.add(Dense(10, activation='relu'))
+model.add(LSTM(8, activation='tanh'))
 model.add(Dropout(0.01))
 model.add(Dense(1, activation='linear'))
 model.summary()

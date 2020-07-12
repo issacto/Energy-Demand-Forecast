@@ -7,6 +7,9 @@ Package: Keras, Matlab
 <br>
 Members: Winnie Chow, Issac To
 
+<br>
+The execution file is "TryKeras.py". The other files are CSV/Window converter or some other tries
+
 
 ## Data Prepreation
 ```bash
